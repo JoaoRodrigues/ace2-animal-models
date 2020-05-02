@@ -9,12 +9,12 @@ table = new Tabulator("#models-table", {
 	// Formatting
     columns: [
         {title:"Model Name", field:"name", responsive: 0, widthGrow: 2},
-        // {title:"Species", field:"species", responsive: 0, widthGrow: 1},
+        {title:"Species", field:"species", responsive: 0, widthGrow: 2},
         {title:"Score", field:"haddock_score", responsive: 0},
         {
         	title:"Detailed Energetics", // grouped
         	columns: [
-		        {title:"van der Waals", field:"e_vdw"},
+		        {title:"vdW", field:"e_vdw"},
 		        {title:"Electrostatics", field:"e_elec"},
 		        {title:"Desolvation", field:"e_desolv"},
 		        {title:"BSA", field:"buried_surf_area"},
@@ -24,7 +24,7 @@ table = new Tabulator("#models-table", {
     // Layout
     layout:"fitColumns",
     resizableColumns: false,
-	groupBy:"species",
+	// groupBy:"species",
     selectable: true,
     columnHeaderVertAlign:"bottom", //align header contents to bottom of cell
 	responsiveLayout: "hide", // hide rows that no longer fit
