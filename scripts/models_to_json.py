@@ -39,7 +39,7 @@ def collect_models(rootdir):
 	fullpath = rootdir.resolve(strict=True)
 
 	for fpath in fullpath.rglob('*'):
-		if 'template' in fpath:
+		if 'template' in str(fpath:)
 			continue
 
 		if fpath.suffix in suffixes:
