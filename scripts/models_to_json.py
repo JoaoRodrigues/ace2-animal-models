@@ -67,7 +67,7 @@ def process_models(pathlist):
 
 				if line.startswith('REMARK energies:'):
 					sep = line.index(':') + 1
-					fields = list(map(float, line[sep:].split(',')))
+					fields = list(map(str_to_float, line[sep:].split(',')))
 					modeldict['e_vdw'] = fields[5]
 					modeldict['e_elec'] = fields[6]
 
