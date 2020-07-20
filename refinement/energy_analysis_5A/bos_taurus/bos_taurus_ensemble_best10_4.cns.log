@@ -1,0 +1,756 @@
+          ============================================================
+          |                                                          |
+          |            Crystallography & NMR System (CNS)            |
+          |                         CNSsolve                         |
+          |                                                          |
+          ============================================================
+           Version: 1.3 at patch level U
+           Status: Special UU release with Rg and paramagnetic
+                   restraints (A. Bonvin, UU 2011)
+          ============================================================
+           Written by: A.T.Brunger, P.D.Adams, G.M.Clore, W.L.DeLano,
+                       P.Gros, R.W.Grosse-Kunstleve,J.-S.Jiang,J.M.Krahn,
+                       J.Kuszewski, M.Nilges, N.S.Pannu, R.J.Read,
+                       L.M.Rice, G.F.Schroeder, T.Simonson, G.L.Warren.
+           Copyright (c) 1997-2010 Yale University
+          ============================================================
+           Running on machine: hostname unknown (x86_64/Linux,64-bit)
+           Program started by: joaor
+           Program started at: 15:57:32 on 08-May-2020
+          ============================================================
+
+ FFT3C: Using FFTPACK4.1
+
+ CNSsolve>! 
+ CNSsolve>! Calculates pairwise energies between residues 
+ CNSsolve>! Will only rebuild hydrogen atoms 
+ CNSsolve>! 
+ CNSsolve>! Adapted from HADDOCK protocols here and there. 
+ CNSsolve>! JR & AMJJB @ 2020 
+ CNSsolve>! 
+ CNSsolve>define( 
+ DEFINE>    {===>} auto_break=true; 
+ DEFINE>    {===>} break_cutoff=2.5; 
+ DEFINE>    {===>} dnaauto_break=true; 
+ DEFINE>    {===>} dbreak_cutoff=4.5; 
+ DEFINE>    {===>} auto_cispro=true; 
+ DEFINE>    {===>} auto_disu=true; 
+ DEFINE>    {===>} disulphide_dist=3.0; 
+ DEFINE>    {===>} glyco_dist=2.75; 
+ DEFINE>    {===>} coorin="molecule.pdb"; 
+ DEFINE>    {===>} icutoff=5.0; 
+ DEFINE>) 
+ CNSsolve> 
+ CNSsolve>! Mute (most) output 
+ CNSsolve>set message=on echo=off end 
+ ASSFIL: file merged.param opened.
+ MESSage=NORM
+ EVALUATE: symbol $OLD_MESSAGE set to "NORM" (string)
+ ECHO=FALSe {OFF}
+ EVALUATE: symbol $OLD_ECHO set to FALSE (logical)
+ %PARRDR-info: duplication of bond HC   NC2 
+ %PARRDR-info: duplication of angle CH2E C    NH1 
+ %PARRDR-info: duplication of angle CH2P CH2E HA  
+ ASSFIL: file merged.top opened.
+ MESSage=NORM
+ EVALUATE: symbol $OLD_MESSAGE set to "NORM" (string)
+ ECHO=FALSe {OFF}
+ EVALUATE: symbol $OLD_ECHO set to FALSE (logical)
+ %RTFIO-warning: undefined masses in residue CYC 
+ %RTFIO error encountered: there are undefined masses.
+   (CNS is in mode: SET ABORT=NORMal END)
+ MESSage=NORM
+ EVALUATE: symbol $OLD_MESSAGE set to "NORM" (string)
+ ECHO=FALSe {OFF}
+ EVALUATE: symbol $OLD_ECHO set to FALSE (logical)
+ ASSFIL: file protein_break.top opened.
+ %RTFRDR-ERR: duplicate (P-)RESIdue name DPEP
+ %RTFRDR-ERR: duplicate (P-)RESIdue name DPPP
+ RTFRDR> 
+ RTFRDR>end 
+ CNSsolve> 
+ CNSsolve>! Reset output muting 
+ CNSsolve>set message=off echo=off end 
+FOUND 5 NAG:ASN pairs
+NAG:ASN bond added from   B    901  to   B    53  
+NAG:ASN bond added from   B    903  to   B    90  
+NAG:ASN bond added from   B    908  to   B    432 
+NAG:ASN bond added from   B    910  to   B    546 
+NAG:ASN bond added from   E    1401 to   E    343 
+FOUND 6 NAG:NAG pairs
+NAG:NAG B14 bond added from   B    902  to   B    901 
+NAG:NAG B14 bond added from   B    904  to   B    903 
+NAG:NAG B14 bond added from   B    909  to   B    908 
+NAG:NAG B14 bond added from   B    911  to   B    910 
+NAG:NAG B14 bond added from   E    1402 to   E    1401
+NAG:NAG B14 bond added from   E    1403 to   E    1402
+ %PARRDR-info: duplication of bond HC   NC2 
+ %PARRDR-info: duplication of angle CH2E C    NH1 
+ %PARRDR-info: duplication of angle CH2P CH2E HA  
+ POWELL: number of degrees of freedom= 13830
+ NBONDS: generating intra-molecular exclusion list with mode=-2
+ MAKINB: mode  -2 found   4610 exclusions and      0 interactions(1-4)
+ %atoms "B   -230 -PHE -HB2 " and "B   -230 -PHE -HE2 " only  0.06 A apart
+ %atoms "B   -328 -TRP -HZ2 " and "B   -328 -TRP -HH2 " only  0.10 A apart
+ %atoms "B   -349 -TRP -CG  " and "B   -349 -TRP -HE3 " only  0.08 A apart
+ %atoms "B   -408 -MET -HE2 " and "B   -408 -MET -HE3 " only  0.10 A apart
+ %atoms "B   -461 -TRP -HA  " and "B   -461 -TRP -CG  " only  0.09 A apart
+ %atoms "B   -544 -ILE -HG12" and "B   -544 -ILE -HG22" only  0.10 A apart
+ %atoms "B   -557 -MET -HE1 " and "B   -557 -MET -HE3 " only  0.09 A apart
+ %atoms "B   -558 -LEU -CA  " and "B   -558 -LEU -HD11" only  0.10 A apart
+ %atoms "E   -362 -VAL -CA  " and "E   -362 -VAL -HG23" only  0.09 A apart
+ %atoms "E   -408 -ARG -HA  " and "E   -408 -ARG -HB1 " only  0.05 A apart
+ %atoms "E   -458 -LYS -HD2 " and "E   -458 -LYS -HE1 " only  0.07 A apart
+ %atoms "E   -515 -PHE -HA  " and "E   -515 -PHE -HE1 " only  0.03 A apart
+ NBONDS: found   697463 intra-atom interactions
+ NBONDS: found       12 nonbonded violations
+ %atoms "E   -454 -ARG -CG  " and "E   -454 -ARG -HD2 " only  0.04 A apart
+ NBONDS: found   697234 intra-atom interactions
+ NBONDS: found        1 nonbonded violations
+ %atoms "B   -419 -LYS -HD2 " and "B   -419 -LYS -CE  " only  0.09 A apart
+ NBONDS: found   694241 intra-atom interactions
+ NBONDS: found        1 nonbonded violations
+ NBONDS: found   690239 intra-atom interactions
+ --------------- cycle=    10 ------ stepsize=   -0.0000 -----------------------
+ | Etotal =0.34E+07   grad(E)=588.619    E(BOND)=529343.300 E(ANGL)=0.16E+07   |
+ | E(VDW )=0.13E+07                                                            |
+ -------------------------------------------------------------------------------
+ NBONDS: found   690322 intra-atom interactions
+ NBONDS: found   690553 intra-atom interactions
+ NBONDS: found   690853 intra-atom interactions
+ NBONDS: found   690937 intra-atom interactions
+ --------------- cycle=    20 ------ stepsize=   -0.0000 -----------------------
+ | Etotal =0.12E+07   grad(E)=300.459    E(BOND)=230124.319 E(ANGL)=491686.893 |
+ | E(VDW )=511643.956                                                          |
+ -------------------------------------------------------------------------------
+ NBONDS: found   691012 intra-atom interactions
+ NBONDS: found   691291 intra-atom interactions
+ NBONDS: found   691411 intra-atom interactions
+ --------------- cycle=    30 ------ stepsize=   -0.0000 -----------------------
+ | Etotal =977259.485 grad(E)=239.009    E(BOND)=186534.992 E(ANGL)=356149.667 |
+ | E(VDW )=434574.825                                                          |
+ -------------------------------------------------------------------------------
+ NBONDS: found   691276 intra-atom interactions
+ NBONDS: found   691186 intra-atom interactions
+ --------------- cycle=    40 ------ stepsize=    0.0000 -----------------------
+ | Etotal =936736.521 grad(E)=231.279    E(BOND)=182534.483 E(ANGL)=335956.542 |
+ | E(VDW )=418245.497                                                          |
+ -------------------------------------------------------------------------------
+ NBONDS: found   691248 intra-atom interactions
+ NBONDS: found   691253 intra-atom interactions
+ --------------- cycle=    50 ------ stepsize=    0.0001 -----------------------
+ | Etotal =919994.944 grad(E)=229.173    E(BOND)=182713.879 E(ANGL)=326658.735 |
+ | E(VDW )=410622.331                                                          |
+ -------------------------------------------------------------------------------
+ POWELL: STEP number limit. Normal termination
+ POWELL: Current coordinates set to last minimum
+ DCART: temperature coupling (TCOUpling) enabled
+ -------------------------- Cartesian dynamics start ---------------------------
+ | E(kin)+E(total)=0.36E+07        E(kin)=4206.369      temperature=306.109    |
+ | Etotal =0.36E+07   grad(E)=588.856    E(BOND)=182713.879 E(ANGL)=326658.735 |
+ | E(IMPR)=0.31E+07                                                            |
+ -------------------------------------------------------------------------------
+ ----------------- final step=       50 at      0.02500 ps ---------------------
+ | E(kin)+E(total)=0.23E+07        E(kin)=447709.688    temperature=32581.021  |
+ | Etotal =0.19E+07   grad(E)=328.149    E(BOND)=204986.637 E(ANGL)=849617.762 |
+ | E(IMPR)=834984.731                                                          |
+ -------------------------------------------------------------------------------
+ CENMAS: Information about center of free masses
+         position [A]          :     -0.61115      0.19265     -0.29092
+         velocity [A/ps]       :     -0.13399     -0.93315     -0.64453
+         ang. mom. [amu A/ps]  :-192610.40213*************1611250.49278
+         kin. ener. [Kcal/mol] :    143.69286
+ POWELL: number of degrees of freedom= 13830
+ NBONDS: found   688314 intra-atom interactions
+ NBONDS: found   687710 intra-atom interactions
+ NBONDS: found   687741 intra-atom interactions
+ NBONDS: found   688890 intra-atom interactions
+ --------------- cycle=    10 ------ stepsize=   -0.0000 -----------------------
+ | Etotal =0.20E+07   grad(E)=309.291    E(BOND)=225694.384 E(ANGL)=454660.124 |
+ | E(IMPR)=774508.613 E(VDW )=506121.774                                       |
+ -------------------------------------------------------------------------------
+ NBONDS: found   689715 intra-atom interactions
+ NBONDS: found   689376 intra-atom interactions
+ NBONDS: found   689814 intra-atom interactions
+ NBONDS: found   690235 intra-atom interactions
+ NBONDS: found   690006 intra-atom interactions
+ NBONDS: found   689847 intra-atom interactions
+ --------------- cycle=    20 ------ stepsize=    0.0000 -----------------------
+ | Etotal =0.14E+07   grad(E)=155.166    E(BOND)=181887.937 E(ANGL)=185513.018 |
+ | E(IMPR)=655893.101 E(VDW )=373328.703                                       |
+ -------------------------------------------------------------------------------
+ NBONDS: found   689866 intra-atom interactions
+ NBONDS: found   689916 intra-atom interactions
+ NBONDS: found   689831 intra-atom interactions
+ --------------- cycle=    30 ------ stepsize=    0.0000 -----------------------
+ | Etotal =0.13E+07   grad(E)=123.925    E(BOND)=170594.862 E(ANGL)=153651.219 |
+ | E(IMPR)=638806.803 E(VDW )=346904.123                                       |
+ -------------------------------------------------------------------------------
+ NBONDS: found   689819 intra-atom interactions
+ NBONDS: found   689807 intra-atom interactions
+ --------------- cycle=    40 ------ stepsize=    0.0001 -----------------------
+ | Etotal =0.13E+07   grad(E)=118.005    E(BOND)=168474.687 E(ANGL)=144893.497 |
+ | E(IMPR)=624726.167 E(VDW )=340909.051                                       |
+ -------------------------------------------------------------------------------
+ NBONDS: found   689754 intra-atom interactions
+ NBONDS: found   689817 intra-atom interactions
+ NBONDS: found   689792 intra-atom interactions
+ --------------- cycle=    50 ------ stepsize=    0.0002 -----------------------
+ | Etotal =0.13E+07   grad(E)=116.026    E(BOND)=168799.146 E(ANGL)=136934.045 |
+ | E(IMPR)=615187.171 E(VDW )=335140.717                                       |
+ -------------------------------------------------------------------------------
+ POWELL: STEP number limit. Normal termination
+ POWELL: Current coordinates set to last minimum
+ DCART: temperature coupling (TCOUpling) enabled
+ -------------------------- Cartesian dynamics start ---------------------------
+ | E(kin)+E(total)=0.13E+07        E(kin)=4146.783      temperature=301.772    |
+ | Etotal =0.13E+07   grad(E)=116.026    E(BOND)=168799.146 E(ANGL)=136934.045 |
+ | E(IMPR)=615187.171 E(VDW )=335140.717                                       |
+ -------------------------------------------------------------------------------
+ NBONDS: found   689766 intra-atom interactions
+ NBONDS: found   689808 intra-atom interactions
+ ----------------- final step=       50 at      0.02500 ps ---------------------
+ | E(kin)+E(total)=0.13E+07        E(kin)=7863.239      temperature=572.229    |
+ | Etotal =0.12E+07   grad(E)=118.738    E(BOND)=170919.814 E(ANGL)=136004.450 |
+ | E(IMPR)=606074.331 E(VDW )=333508.206                                       |
+ -------------------------------------------------------------------------------
+ CENMAS: Information about center of free masses
+         position [A]          :     -0.60668      0.17604     -0.29729
+         velocity [A/ps]       :      0.01231     -0.07478      0.02747
+         ang. mom. [amu A/ps]  :-110901.86985  75236.89978 118621.76410
+         kin. ener. [Kcal/mol] :      0.71603
+ %PARRDR-info: duplication of bond HC   NC2 
+ %PARRDR-info: duplication of angle CH2E C    NH1 
+ %PARRDR-info: duplication of angle CH2P CH2E HA  
+ POWELL: number of degrees of freedom= 13830
+ NBONDS: generating intra-molecular exclusion list with mode=-3
+ MAKINB: mode  -3 found  15740 exclusions and      0 interactions(1-4)
+ NBONDS: found   678680 intra-atom interactions
+ NBONDS: found   680421 intra-atom interactions
+ NBONDS: found   680378 intra-atom interactions
+ NBONDS: found   680408 intra-atom interactions
+ NBONDS: found   680883 intra-atom interactions
+ NBONDS: found   681052 intra-atom interactions
+ NBONDS: found   681313 intra-atom interactions
+ --------------- cycle=    25 ------ stepsize=    0.0002 -----------------------
+ | Etotal =335790.823 grad(E)=138.703    E(BOND)=48075.862  E(ANGL)=152216.940 |
+ | E(IMPR)=133229.486 E(VDW )=2268.534                                         |
+ -------------------------------------------------------------------------------
+ NBONDS: found   681130 intra-atom interactions
+ NBONDS: found   681121 intra-atom interactions
+ NBONDS: found   680950 intra-atom interactions
+ NBONDS: found   680964 intra-atom interactions
+ NBONDS: found   680956 intra-atom interactions
+ NBONDS: found   681005 intra-atom interactions
+ NBONDS: found   680926 intra-atom interactions
+ --------------- cycle=    50 ------ stepsize=   -0.0000 -----------------------
+ | Etotal =63854.483  grad(E)=33.392     E(BOND)=2279.005   E(ANGL)=30091.984  |
+ | E(IMPR)=30586.511  E(VDW )=896.983                                          |
+ -------------------------------------------------------------------------------
+ NBONDS: found   681009 intra-atom interactions
+ NBONDS: found   680846 intra-atom interactions
+ NBONDS: found   680751 intra-atom interactions
+ NBONDS: found   680879 intra-atom interactions
+ NBONDS: found   680953 intra-atom interactions
+ NBONDS: found   681018 intra-atom interactions
+ --------------- cycle=    75 ------ stepsize=    0.0004 -----------------------
+ | Etotal =11945.023  grad(E)=25.115     E(BOND)=754.318    E(ANGL)=7643.864   |
+ | E(IMPR)=2790.468   E(VDW )=756.373                                          |
+ -------------------------------------------------------------------------------
+ NBONDS: found   681024 intra-atom interactions
+ NBONDS: found   680969 intra-atom interactions
+ NBONDS: found   680998 intra-atom interactions
+ --------------- cycle=   100 ------ stepsize=   -0.0001 -----------------------
+ | Etotal =1926.504   grad(E)=8.586      E(BOND)=49.473     E(ANGL)=1127.243   |
+ | E(IMPR)=71.960     E(VDW )=677.828                                          |
+ -------------------------------------------------------------------------------
+ POWELL: STEP number limit. Normal termination
+ POWELL: Current coordinates set to last minimum
+ DCART: temperature coupling (TCOUpling) enabled
+ -------------------------- Cartesian dynamics start ---------------------------
+ | E(kin)+E(total)=6006.954        E(kin)=4080.450      temperature=296.945    |
+ | Etotal =1926.504   grad(E)=8.586      E(BOND)=49.473     E(ANGL)=1127.243   |
+ | E(IMPR)=71.960     E(VDW )=677.828                                          |
+ -------------------------------------------------------------------------------
+ NBONDS: found   681038 intra-atom interactions
+ NBONDS: found   680924 intra-atom interactions
+ NBONDS: found   681008 intra-atom interactions
+ NBONDS: found   680939 intra-atom interactions
+ NBONDS: found   680971 intra-atom interactions
+ NBONDS: found   681016 intra-atom interactions
+ NBONDS: found   680984 intra-atom interactions
+ NBONDS: found   681047 intra-atom interactions
+ NBONDS: found   680979 intra-atom interactions
+ NBONDS: found   681020 intra-atom interactions
+ NBONDS: found   680952 intra-atom interactions
+ NBONDS: found   680921 intra-atom interactions
+ NBONDS: found   681015 intra-atom interactions
+ NBONDS: found   680920 intra-atom interactions
+ NBONDS: found   680969 intra-atom interactions
+ ----------------- final step=      500 at      0.25000 ps ---------------------
+ | E(kin)+E(total)=8701.806        E(kin)=4728.815      temperature=344.128    |
+ | Etotal =3972.991   grad(E)=25.371     E(BOND)=638.874    E(ANGL)=2309.992   |
+ | E(IMPR)=264.969    E(VDW )=759.157                                          |
+ -------------------------------------------------------------------------------
+ CENMAS: Information about center of free masses
+         position [A]          :     -0.60509      0.17221     -0.29505
+         velocity [A/ps]       :      0.08976      0.01983     -0.00557
+         ang. mom. [amu A/ps]  : -65467.26101 193531.73088 222519.59141
+         kin. ener. [Kcal/mol] :      0.93439
+ EFLAGS: the following energy flags are set
+ EFLAGS: BOND ANGL DIHE IMPR VDW 
+ %PARRDR-info: duplication of bond HC   NC2 
+ %PARRDR-info: duplication of angle CH2E C    NH1 
+ %PARRDR-info: duplication of angle CH2P CH2E HA  
+ POWELL: number of degrees of freedom= 13830
+ NBONDS: generating intra-molecular exclusion list with mode=-3
+ MAKINB: mode  -3 found  15740 exclusions and      0 interactions(1-4)
+ NBONDS: found   680969 intra-atom interactions
+ NBONDS: found   680877 intra-atom interactions
+ --------------- cycle=    50 ------ stepsize=    0.0012 -----------------------
+ | Etotal =13897.194  grad(E)=13.699     E(BOND)=249.943    E(ANGL)=1197.052   |
+ | E(DIHE)=209.679    E(IMPR)=100.726    E(VDW )=12139.793                     |
+ -------------------------------------------------------------------------------
+ NBONDS: found   680862 intra-atom interactions
+ --------------- cycle=   100 ------ stepsize=    0.0012 -----------------------
+ | Etotal =13443.478  grad(E)=13.422     E(BOND)=238.602    E(ANGL)=1165.237   |
+ | E(DIHE)=172.638    E(IMPR)=93.270     E(VDW )=11773.731                     |
+ -------------------------------------------------------------------------------
+ NBONDS: found   680910 intra-atom interactions
+ --------------- cycle=   150 ------ stepsize=    0.0012 -----------------------
+ | Etotal =13368.023  grad(E)=13.403     E(BOND)=239.805    E(ANGL)=1162.236   |
+ | E(DIHE)=164.634    E(IMPR)=93.541     E(VDW )=11707.806                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   200 ------ stepsize=    0.0010 -----------------------
+ | Etotal =13342.153  grad(E)=13.374     E(BOND)=239.502    E(ANGL)=1157.644   |
+ | E(DIHE)=162.285    E(IMPR)=93.256     E(VDW )=11689.466                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   250 ------ stepsize=    0.0008 -----------------------
+ | Etotal =13340.540  grad(E)=13.370     E(BOND)=239.508    E(ANGL)=1156.729   |
+ | E(DIHE)=161.869    E(IMPR)=93.144     E(VDW )=11689.290                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   300 ------ stepsize=    0.0009 -----------------------
+ | Etotal =13340.118  grad(E)=13.371     E(BOND)=239.506    E(ANGL)=1156.848   |
+ | E(DIHE)=161.905    E(IMPR)=92.921     E(VDW )=11688.938                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   350 ------ stepsize=    0.0011 -----------------------
+ | Etotal =13340.109  grad(E)=13.371     E(BOND)=239.501    E(ANGL)=1156.813   |
+ | E(DIHE)=161.842    E(IMPR)=92.959     E(VDW )=11688.996                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   400 ------ stepsize=    0.0012 -----------------------
+ | Etotal =13340.102  grad(E)=13.371     E(BOND)=239.482    E(ANGL)=1156.802   |
+ | E(DIHE)=161.835    E(IMPR)=92.950     E(VDW )=11689.033                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   450 ------ stepsize=    0.0010 -----------------------
+ | Etotal =13340.100  grad(E)=13.371     E(BOND)=239.469    E(ANGL)=1156.799   |
+ | E(DIHE)=161.965    E(IMPR)=92.957     E(VDW )=11688.910                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   500 ------ stepsize=    0.0011 -----------------------
+ | Etotal =13340.100  grad(E)=13.371     E(BOND)=239.471    E(ANGL)=1156.805   |
+ | E(DIHE)=161.979    E(IMPR)=92.951     E(VDW )=11688.892                     |
+ -------------------------------------------------------------------------------
+ POWELL: STEP number limit. Normal termination
+ POWELL: Current coordinates set to last minimum
+ DCART: temperature coupling (TCOUpling) enabled
+ -------------------------- Cartesian dynamics start ---------------------------
+ | E(kin)+E(total)=17411.688       E(kin)=4071.589      temperature=296.300    |
+ | Etotal =13340.100  grad(E)=13.371     E(BOND)=239.471    E(ANGL)=1156.805   |
+ | E(DIHE)=161.979    E(IMPR)=92.951     E(VDW )=11688.892                     |
+ -------------------------------------------------------------------------------
+ NBONDS: found   680915 intra-atom interactions
+ NBONDS: found   680805 intra-atom interactions
+ NBONDS: found   680899 intra-atom interactions
+ NBONDS: found   680953 intra-atom interactions
+ NBONDS: found   680813 intra-atom interactions
+ NBONDS: found   680980 intra-atom interactions
+ NBONDS: found   680964 intra-atom interactions
+ NBONDS: found   681018 intra-atom interactions
+ ----------------- final step=      500 at      0.25000 ps ---------------------
+ | E(kin)+E(total)=21630.395       E(kin)=4210.123      temperature=306.382    |
+ | Etotal =17420.272  grad(E)=32.013     E(BOND)=1333.614   E(ANGL)=3483.765   |
+ | E(DIHE)=179.073    E(IMPR)=457.760    E(VDW )=11966.061                     |
+ -------------------------------------------------------------------------------
+ CENMAS: Information about center of free masses
+         position [A]          :     -0.60524      0.17223     -0.29526
+         velocity [A/ps]       :     -0.15188     -0.22826      0.03108
+         ang. mom. [amu A/ps]  :  38787.14046  46170.40543  22652.34124
+         kin. ener. [Kcal/mol] :      0.42278
+ POWELL: number of degrees of freedom= 13830
+ --------------- cycle=    50 ------ stepsize=    0.0009 -----------------------
+ | Etotal =13346.276  grad(E)=13.401     E(BOND)=239.175    E(ANGL)=1159.865   |
+ | E(DIHE)=161.734    E(IMPR)=92.668     E(VDW )=11692.834                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   100 ------ stepsize=    0.0010 -----------------------
+ | Etotal =13339.758  grad(E)=13.388     E(BOND)=239.385    E(ANGL)=1158.116   |
+ | E(DIHE)=161.213    E(IMPR)=93.006     E(VDW )=11688.038                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   150 ------ stepsize=    0.0008 -----------------------
+ | Etotal =13339.073  grad(E)=13.377     E(BOND)=239.096    E(ANGL)=1157.604   |
+ | E(DIHE)=163.501    E(IMPR)=92.975     E(VDW )=11685.897                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   200 ------ stepsize=    0.0013 -----------------------
+ | Etotal =13338.492  grad(E)=13.379     E(BOND)=239.261    E(ANGL)=1157.759   |
+ | E(DIHE)=163.018    E(IMPR)=92.912     E(VDW )=11685.541                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   250 ------ stepsize=    0.0010 -----------------------
+ | Etotal =13338.483  grad(E)=13.378     E(BOND)=239.275    E(ANGL)=1157.722   |
+ | E(DIHE)=162.941    E(IMPR)=92.916     E(VDW )=11685.629                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   300 ------ stepsize=    0.0009 -----------------------
+ | Etotal =13338.483  grad(E)=13.378     E(BOND)=239.273    E(ANGL)=1157.723   |
+ | E(DIHE)=162.932    E(IMPR)=92.918     E(VDW )=11685.637                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=   350 ------ stepsize=    0.0012 -----------------------
+ | Etotal =13338.483  grad(E)=13.378     E(BOND)=239.271    E(ANGL)=1157.723   |
+ | E(DIHE)=162.930    E(IMPR)=92.919     E(VDW )=11685.640                     |
+ -------------------------------------------------------------------------------
+ POWELL: Gradient converged. Normal termination
+ POWELL: Current coordinates set to last minimum
+ POWELL: number of degrees of freedom= 18375
+ NBONDS: found   680766 intra-atom interactions
+ --------------- cycle=     5 ------ stepsize=    0.0007 -----------------------
+ | Etotal =13130.887  grad(E)=13.363     E(BOND)=238.126    E(ANGL)=1155.809   |
+ | E(DIHE)=162.863    E(IMPR)=91.620     E(VDW )=11482.469                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    10 ------ stepsize=    0.0012 -----------------------
+ | Etotal =13122.829  grad(E)=13.359     E(BOND)=238.067    E(ANGL)=1157.046   |
+ | E(DIHE)=162.832    E(IMPR)=90.885     E(VDW )=11474.000                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    15 ------ stepsize=   -0.0002 -----------------------
+ | Etotal =13120.092  grad(E)=13.354     E(BOND)=237.979    E(ANGL)=1156.199   |
+ | E(DIHE)=162.843    E(IMPR)=91.141     E(VDW )=11471.930                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    20 ------ stepsize=    0.0007 -----------------------
+ | Etotal =13119.367  grad(E)=13.349     E(BOND)=237.978    E(ANGL)=1155.697   |
+ | E(DIHE)=162.815    E(IMPR)=90.940     E(VDW )=11471.937                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    25 ------ stepsize=    0.0002 -----------------------
+ | Etotal =13119.050  grad(E)=13.353     E(BOND)=238.011    E(ANGL)=1156.234   |
+ | E(DIHE)=162.801    E(IMPR)=91.053     E(VDW )=11470.950                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    30 ------ stepsize=    0.0010 -----------------------
+ | Etotal =13118.716  grad(E)=13.350     E(BOND)=237.990    E(ANGL)=1155.793   |
+ | E(DIHE)=162.793    E(IMPR)=90.972     E(VDW )=11471.168                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    35 ------ stepsize=   -0.0001 -----------------------
+ | Etotal =13118.650  grad(E)=13.348     E(BOND)=237.908    E(ANGL)=1155.802   |
+ | E(DIHE)=162.781    E(IMPR)=91.012     E(VDW )=11471.147                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    40 ------ stepsize=    0.0012 -----------------------
+ | Etotal =13118.544  grad(E)=13.349     E(BOND)=237.926    E(ANGL)=1155.761   |
+ | E(DIHE)=162.725    E(IMPR)=91.012     E(VDW )=11471.119                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    45 ------ stepsize=   -0.0002 -----------------------
+ | Etotal =13118.479  grad(E)=13.348     E(BOND)=237.928    E(ANGL)=1155.749   |
+ | E(DIHE)=162.682    E(IMPR)=91.012     E(VDW )=11471.107                     |
+ -------------------------------------------------------------------------------
+ --------------- cycle=    50 ------ stepsize=    0.0012 -----------------------
+ | Etotal =13118.439  grad(E)=13.349     E(BOND)=237.914    E(ANGL)=1155.863   |
+ | E(DIHE)=162.658    E(IMPR)=91.020     E(VDW )=11470.984                     |
+ -------------------------------------------------------------------------------
+ POWELL: STEP number limit. Normal termination
+ POWELL: Current coordinates set to last minimum
+ %PARRDR-info: duplication of bond HC   NC2 
+ %PARRDR-info: duplication of angle CH2E C    NH1 
+ %PARRDR-info: duplication of angle CH2P CH2E HA  
+ POWELL: number of degrees of freedom= 18375
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found  17741 exclusions and  17871 interactions(1-4)
+ NBONDS: found   901460 intra-atom interactions
+ NBONDS: found   901628 intra-atom interactions
+ NBONDS: found   901606 intra-atom interactions
+ --------------- cycle=    50 ------ stepsize=    0.0008 -----------------------
+ | Etotal =23.824     grad(E)=5.536      E(BOND)=17.044     E(ANGL)=423.594    |
+ | E(DIHE)=53.380     E(IMPR)=34.501     E(VDW )=-505.664   E(ELEC)=0.969      |
+ -------------------------------------------------------------------------------
+ POWELL: STEP number limit. Normal termination
+ POWELL: Current coordinates set to last minimum
+ --------------- cycle=     1 --------------------------------------------------
+ | Etotal =23.824     grad(E)=5.536      E(BOND)=17.044     E(ANGL)=423.594    |
+ | E(DIHE)=53.380     E(IMPR)=34.501     E(VDW )=-505.664   E(ELEC)=0.969      |
+ -------------------------------------------------------------------------------
+ SURFAC: half the sigma value being used for atomic radii.
+ SURFAC: ACCEssible surface area
+ SURFAC: ACCUracy= 0.07 RH2O=  1.40
+         Z-grid=  0.32 number-of-Z-sections=  211
+         measures-of-arc= 93940 and150953
+ SURFAC: half the sigma value being used for atomic radii.
+ SURFAC: ACCEssible surface area
+ SURFAC: ACCUracy= 0.07 RH2O=  1.40
+         Z-grid=  0.32 number-of-Z-sections=  136
+         measures-of-arc= 25549 and 46444
+ SURFAC: half the sigma value being used for atomic radii.
+ SURFAC: ACCEssible surface area
+ SURFAC: ACCUracy= 0.07 RH2O=  1.40
+         Z-grid=  0.32 number-of-Z-sections=  211
+         measures-of-arc=121249 and197578
+ %PARRDR-info: duplication of bond HC   NC2 
+ %PARRDR-info: duplication of angle CH2E C    NH1 
+ %PARRDR-info: duplication of angle CH2P CH2E HA  
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1354 intra-atom interactions
+ --------------- cycle=     2 --------------------------------------------------
+ | Etotal =-9.069     grad(E)=0.122      E(VDW )=-3.582     E(ELEC)=-5.487     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1666 intra-atom interactions
+ --------------- cycle=     3 --------------------------------------------------
+ | Etotal =-13.660    grad(E)=0.132      E(VDW )=-4.810     E(ELEC)=-8.850     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1264 intra-atom interactions
+ --------------- cycle=     4 --------------------------------------------------
+ | Etotal =-3.372     grad(E)=0.023      E(VDW )=-4.294     E(ELEC)=0.923      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1311 intra-atom interactions
+ --------------- cycle=     5 --------------------------------------------------
+ | Etotal =-78.191    grad(E)=0.340      E(VDW )=-2.113     E(ELEC)=-76.079    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     2632 intra-atom interactions
+ --------------- cycle=     6 --------------------------------------------------
+ | Etotal =-28.704    grad(E)=0.269      E(VDW )=-5.376     E(ELEC)=-23.328    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1985 intra-atom interactions
+ --------------- cycle=     7 --------------------------------------------------
+ | Etotal =-8.707     grad(E)=0.175      E(VDW )=-3.656     E(ELEC)=-5.051     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      677 intra-atom interactions
+ --------------- cycle=     8 --------------------------------------------------
+ | Etotal =-20.035    grad(E)=0.213      E(VDW )=-1.294     E(ELEC)=-18.741    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      519 intra-atom interactions
+ --------------- cycle=     9 --------------------------------------------------
+ | Etotal =-19.146    grad(E)=0.238      E(VDW )=-1.697     E(ELEC)=-17.449    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      921 intra-atom interactions
+ --------------- cycle=    10 --------------------------------------------------
+ | Etotal =-25.350    grad(E)=0.342      E(VDW )=-1.407     E(ELEC)=-23.943    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1511 intra-atom interactions
+ --------------- cycle=    11 --------------------------------------------------
+ | Etotal =-14.616    grad(E)=0.165      E(VDW )=-3.992     E(ELEC)=-10.625    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      422 intra-atom interactions
+ --------------- cycle=    12 --------------------------------------------------
+ | Etotal =1.580      grad(E)=0.030      E(VDW )=-0.645     E(ELEC)=2.225      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      581 intra-atom interactions
+ --------------- cycle=    13 --------------------------------------------------
+ | Etotal =-3.274     grad(E)=0.023      E(VDW )=-3.156     E(ELEC)=-0.118     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      275 intra-atom interactions
+ --------------- cycle=    14 --------------------------------------------------
+ | Etotal =-0.868     grad(E)=0.013      E(VDW )=-0.868     E(ELEC)=0.000      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      571 intra-atom interactions
+ --------------- cycle=    15 --------------------------------------------------
+ | Etotal =-6.048     grad(E)=0.047      E(VDW )=-2.242     E(ELEC)=-3.806     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      534 intra-atom interactions
+ --------------- cycle=    16 --------------------------------------------------
+ | Etotal =-5.750     grad(E)=0.061      E(VDW )=-0.980     E(ELEC)=-4.770     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      351 intra-atom interactions
+ --------------- cycle=    17 --------------------------------------------------
+ | Etotal =-1.114     grad(E)=0.023      E(VDW )=-0.817     E(ELEC)=-0.296     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     3045 intra-atom interactions
+ --------------- cycle=    18 --------------------------------------------------
+ | Etotal =-29.166    grad(E)=0.272      E(VDW )=-11.227    E(ELEC)=-17.939    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      580 intra-atom interactions
+ --------------- cycle=    19 --------------------------------------------------
+ | Etotal =-4.859     grad(E)=0.047      E(VDW )=-2.058     E(ELEC)=-2.801     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      741 intra-atom interactions
+ --------------- cycle=    20 --------------------------------------------------
+ | Etotal =0.766      grad(E)=0.105      E(VDW )=-2.358     E(ELEC)=3.124      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      480 intra-atom interactions
+ --------------- cycle=    21 --------------------------------------------------
+ | Etotal =-2.582     grad(E)=0.064      E(VDW )=-1.307     E(ELEC)=-1.275     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      219 intra-atom interactions
+ --------------- cycle=    22 --------------------------------------------------
+ | Etotal =5.232      grad(E)=0.086      E(VDW )=-0.400     E(ELEC)=5.632      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      761 intra-atom interactions
+ --------------- cycle=    23 --------------------------------------------------
+ | Etotal =-84.257    grad(E)=0.352      E(VDW )=2.112      E(ELEC)=-86.368    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      879 intra-atom interactions
+ --------------- cycle=    24 --------------------------------------------------
+ | Etotal =-14.232    grad(E)=0.234      E(VDW )=-0.367     E(ELEC)=-13.865    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      410 intra-atom interactions
+ --------------- cycle=    25 --------------------------------------------------
+ | Etotal =-7.373     grad(E)=0.122      E(VDW )=-0.440     E(ELEC)=-6.933     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1352 intra-atom interactions
+ --------------- cycle=    26 --------------------------------------------------
+ | Etotal =2.059      grad(E)=0.067      E(VDW )=-4.613     E(ELEC)=6.672      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1410 intra-atom interactions
+ --------------- cycle=    27 --------------------------------------------------
+ | Etotal =-5.460     grad(E)=0.035      E(VDW )=-6.143     E(ELEC)=0.683      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      752 intra-atom interactions
+ --------------- cycle=    28 --------------------------------------------------
+ | Etotal =0.538      grad(E)=0.032      E(VDW )=-1.100     E(ELEC)=1.638      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      857 intra-atom interactions
+ --------------- cycle=    29 --------------------------------------------------
+ | Etotal =-8.964     grad(E)=0.121      E(VDW )=-1.777     E(ELEC)=-7.186     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      311 intra-atom interactions
+ --------------- cycle=    30 --------------------------------------------------
+ | Etotal =-0.657     grad(E)=0.030      E(VDW )=-0.605     E(ELEC)=-0.052     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     2183 intra-atom interactions
+ --------------- cycle=    31 --------------------------------------------------
+ | Etotal =-8.944     grad(E)=0.028      E(VDW )=-8.080     E(ELEC)=-0.864     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1149 intra-atom interactions
+ --------------- cycle=    32 --------------------------------------------------
+ | Etotal =-3.204     grad(E)=0.081      E(VDW )=-1.913     E(ELEC)=-1.291     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1810 intra-atom interactions
+ --------------- cycle=    33 --------------------------------------------------
+ | Etotal =-6.003     grad(E)=0.144      E(VDW )=-5.630     E(ELEC)=-0.373     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      285 intra-atom interactions
+ --------------- cycle=    34 --------------------------------------------------
+ | Etotal =-3.246     grad(E)=0.102      E(VDW )=-0.622     E(ELEC)=-2.624     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1193 intra-atom interactions
+ --------------- cycle=    35 --------------------------------------------------
+ | Etotal =-39.278    grad(E)=0.298      E(VDW )=-2.012     E(ELEC)=-37.266    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      489 intra-atom interactions
+ --------------- cycle=    36 --------------------------------------------------
+ | Etotal =-4.595     grad(E)=0.050      E(VDW )=-0.692     E(ELEC)=-3.903     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      434 intra-atom interactions
+ --------------- cycle=    37 --------------------------------------------------
+ | Etotal =-15.602    grad(E)=0.113      E(VDW )=-1.623     E(ELEC)=-13.979    |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      436 intra-atom interactions
+ --------------- cycle=    38 --------------------------------------------------
+ | Etotal =-0.470     grad(E)=0.047      E(VDW )=-0.588     E(ELEC)=0.118      |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1515 intra-atom interactions
+ --------------- cycle=    39 --------------------------------------------------
+ | Etotal =-8.306     grad(E)=0.072      E(VDW )=-4.666     E(ELEC)=-3.640     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1834 intra-atom interactions
+ --------------- cycle=    40 --------------------------------------------------
+ | Etotal =-13.049    grad(E)=0.195      E(VDW )=-3.700     E(ELEC)=-9.349     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1186 intra-atom interactions
+ --------------- cycle=    41 --------------------------------------------------
+ | Etotal =-6.530     grad(E)=0.113      E(VDW )=-4.459     E(ELEC)=-2.071     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      722 intra-atom interactions
+ --------------- cycle=    42 --------------------------------------------------
+ | Etotal =-8.437     grad(E)=0.069      E(VDW )=-2.488     E(ELEC)=-5.949     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found      722 intra-atom interactions
+ --------------- cycle=    43 --------------------------------------------------
+ | Etotal =-3.141     grad(E)=0.040      E(VDW )=-0.829     E(ELEC)=-2.312     |
+ -------------------------------------------------------------------------------
+ NBONDS: generating intra-molecular exclusion list with mode= 5
+ MAKINB: mode   5 found      0 exclusions and      0 interactions(1-4)
+ NBONDS: found     1969 intra-atom interactions
+ --------------- cycle=    44 --------------------------------------------------
+ | Etotal =-17.610    grad(E)=0.173      E(VDW )=-8.111     E(ELEC)=-9.499     |
+ -------------------------------------------------------------------------------
+ HEAP: maximum use      =    22671984 current use      =       96000 bytes
+ HEAP: maximum overhead =        2816 current overhead =         752 bytes
+          ============================================================
+           Maximum dynamic memory allocation:    22671984 bytes
+           Maximum dynamic memory overhead:          2816 bytes
+           Program started at: 15:57:32 on 08-May-2020
+           Program stopped at: 15:57:56 on 08-May-2020
+           CPU time used:      24.0469 seconds
+          ============================================================

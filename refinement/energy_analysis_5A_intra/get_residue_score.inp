@@ -1,0 +1,598 @@
+!
+! Calculates pairwise energies between residues
+! Will only rebuild hydrogen atoms
+!
+! Adapted from HADDOCK protocols here and there.
+! JR & AMJJB @ 2020
+!
+define(
+    {===>} auto_break=true;
+    {===>} break_cutoff=2.5;
+    {===>} dnaauto_break=true;
+    {===>} dbreak_cutoff=4.5;
+    {===>} auto_cispro=true;
+    {===>} auto_disu=true;
+    {===>} disulphide_dist=3.0;
+    {===>} glyco_dist=2.75;
+    {===>} coorin="molecule.pdb";
+    {===>} icutoff=7.5;
+)
+
+! Mute (most) output
+set message=on echo=off end
+
+!
+! Read parameter and topology databases
+!
+
+parameter
+    @@toppar/merged.param
+end
+
+topology
+    @@toppar/merged.top
+    @@toppar/protein_break.top
+end
+
+! Reset output muting
+set message=off echo=off end
+
+!
+! Read coordinates
+!
+
+segment
+  chain
+    @@toppar/protein-allhdg5-4-noter.link
+    separate=true
+    convert-chainid-to-segid=true
+    coordinates @@&coorin
+  end
+end
+
+coordinate @@&coorin
+
+!
+! Detect breaks in protein
+!
+
+if ( &auto_break = true ) then
+
+  evaluate ($break=0)
+
+  for $id1 in id ( name C and bondedto(name CA) and bondedto(name O) ) loop break
+
+    show (segid) (id $id1)
+    evaluate ($segid1=$result)
+    show (resid) (id $id1)
+    evaluate ($resid1=$result)
+    show (resname) (id $id1)
+    evaluate ($resname1=$result)
+
+    show sum(1) (id $id1 and known)
+    if ( $result # 0 ) then
+      identity (store1) ( name N and bondedto(segid $segid1 and resid $resid1 and name c ) )
+
+      if ( $select = 1 ) then
+        show element (store1) (attribute store1 > 0)
+        evaluate ($id2=$result)
+        show (segid) (id $id2)
+        evaluate ($segid2=$result)
+        show (resid) (id $id2)
+        evaluate ($resid2=$result)
+        show (resname) (id $id2)
+        evaluate ($resname2=$result)
+
+        show sum(1) (id $id2 and known)
+        if ( $result # 0 ) then
+
+          pick bond
+            (name c and segid $segid1 and resid $resid1)
+            (name n and segid $segid2 and resid $resid2)
+            geometry
+
+          if ( $result > &break_cutoff ) then
+            evaluate ($break=$break+1)
+            evaluate ($seg1.$break=$segid1)
+            evaluate ($res1.$break=$resid1)
+            evaluate ($seg2.$break=$segid2)
+            evaluate ($res2.$break=$resid2)
+            if ( $resname2 = PRO ) then
+              evaluate ($patch.$break=DPPP)
+            elseif ( $resname2 = CPR ) then
+              evaluate ($patch.$break=DPPP)
+            else
+              evaluate ($patch.$break=DPEP)
+            end if
+          end if
+        end if
+      end if
+    end if
+  end loop break
+
+  evaluate ($counter=1)
+
+  while ($counter <= $break) loop delete
+    patch $patch.$counter
+      reference=-=(segid $seg1.$counter and resid $res1.$counter)
+      reference=+=(segid $seg2.$counter and resid $res2.$counter)
+    end
+    evaluate ($counter=$counter+1)
+  end loop delete
+
+end if
+
+!
+! Detect disulphide bridges
+!
+
+if ( &auto_disu = true ) then
+
+  evaluate ($disu=0)
+  for $id1 in id ( resname CYS and name SG ) loop dis1
+
+    show (segid) (id $id1)
+    evaluate ($segid1=$result)
+    show (resid) (id $id1)
+    evaluate ($resid1=$result)
+    identity (store1) (all)
+
+    for $id2 in id ( resname CYS and name SG and
+                  ( attr store1 > $id1 ) ) loop dis2
+
+      show (segid) (id $id2)
+      evaluate ($segid2=$result)
+      show (resid) (id $id2)
+      evaluate ($resid2=$result)
+
+      pick bond (id $id1) (id $id2) geometry
+
+      if ( $result <= &disulphide_dist ) then
+        evaluate ($disu=$disu+1)
+        evaluate ($seg1.$disu=$segid1)
+        evaluate ($seg2.$disu=$segid2)
+        evaluate ($res1.$disu=$resid1)
+        evaluate ($res2.$disu=$resid2)
+      end if
+
+    end loop dis2
+
+  end loop dis1
+
+  evaluate ($counter=1)
+  while ( $counter <= $disu ) loop disu
+    patch disu
+        reference=1=(segid $seg1.$counter and resid $res1.$counter)
+        reference=2=(segid $seg2.$counter and resid $res2.$counter)
+    end
+    evaluate ($counter=$counter+1)
+  end loop disu
+end if
+
+!
+! detect Cis-Prolines
+!
+
+if ( &auto_cispro = true ) then
+
+  for $id in id ( known and not hydrogen and name ca and resname PRO) loop cisp
+
+    show (segid) (id $id)
+    evaluate ($segid=$result)
+    show (resid) (id $id)
+    evaluate ($resid=$result)
+    show (resname) (id $id)
+    evaluate ($resname=$result)
+
+    identity (store1) ( known and not hydrogen and ( name c and bondedto
+             ( name n and resid $resid and segid $segid ) ) )
+    if ( $select = 1 ) then
+      show element (store1) (attribute store1 > 0)
+      evaluate ($id_prev=$result)
+      show (segid) (id $id_prev)
+      evaluate ($segid_prev=$result)
+      show (resid) (id $id_prev)
+      evaluate ($resid_prev=$result)
+      show (resname) (id $id_prev)
+      evaluate ($resname_prev=$result)
+
+      pick dihedral
+        (name ca and segid $segid_prev and resid $resid_prev)
+        (name  c and segid $segid_prev and resid $resid_prev)
+        (name  n and segid $segid and resid $resid)
+        (name ca and segid $segid and resid $resid)
+        geometry
+
+      evaluate ($dihedral=mod($result+360,360))
+
+      if ( $dihedral > 180 ) then
+        evaluate ($dihedral=$dihedral-360)
+      end if
+
+      evaluate ($absdihedral=abs($dihedral))
+
+      if ( $absdihedral < 25 ) then
+        patch cisp reference=NIL=(segid $segid_prev and resid $resid_prev) end
+        display CIS peptide bond detected for residue $resid_prev
+      end if
+
+    end if
+
+  end loop cisp
+end if
+
+!
+! Detect glycosylated ASN residues
+!
+evaluate ($nag=0)
+for $id1 in id ( resn NAG and name C1 ) loop nag
+
+ show (segid) (id $id1)
+ evaluate ($segid1=$result)
+ show (resid) (id $id1)
+ evaluate ($resid1=$result)
+
+ for $id2 in id ( resn ASN and name ND2 ) loop asn
+
+   show (segid) (id $id2)
+   evaluate ($segid2=$result)
+   show (resid) (id $id2)
+   evaluate ($resid2=$result)
+
+   pick bond (id $id1) (id $id2) geometry
+
+   if ( $result <= &glyco_dist ) then
+     evaluate ($nag=$nag+1)
+     evaluate ($seg1.$nag=$segid1)
+     evaluate ($seg2.$nag=$segid2)
+     evaluate ($res1.$nag=$resid1)
+     evaluate ($res2.$nag=$resid2)
+   end if
+
+ end loop asn
+
+end loop nag
+
+display FOUND $nag NAG:ASN pairs
+
+evaluate ($counter=1)
+while ( $counter <= $nag ) loop nagasn
+
+ patch b1n
+   reference=+=(segid $seg2.$counter and resid $res2.$counter)
+   reference=-=(segid $seg1.$counter and resid $res1.$counter)
+ end
+
+ display NAG:ASN bond added from \
+  $seg1.$counter[a4] $res1.$counter[a4] to \
+  $seg2.$counter[a4] $res2.$counter[a4]
+ 
+ evaluate ($counter=$counter+1)
+end loop nagasn
+
+! Go over NAGs again to find NAG-NAG pairs
+
+evaluate ($nag=0)
+for $id1 in id ( resn NAG and name C1 ) loop nag
+
+ show (segid) (id $id1)
+ evaluate ($segid1=$result)
+ show (resid) (id $id1)
+ evaluate ($resid1=$result)
+
+ for $id2 in id ( resn NAG and name O4 ) loop asn
+
+   show (segid) (id $id2)
+   evaluate ($segid2=$result)
+   show (resid) (id $id2)
+   evaluate ($resid2=$result)
+
+   if ($resid1 ne $resid2) then
+
+     pick bond (id $id1) (id $id2) geometry
+     if ( $result <= &glyco_dist ) then
+       evaluate ($nag=$nag+1)
+       evaluate ($seg1.$nag=$segid1)
+       evaluate ($seg2.$nag=$segid2)
+       evaluate ($res1.$nag=$resid1)
+       evaluate ($res2.$nag=$resid2)
+     end if
+
+   end if
+
+ end loop asn
+
+end loop nag
+
+display FOUND $nag NAG:NAG pairs
+
+evaluate ($counter=1)
+while ( $counter <= $nag ) loop nagasn
+ patch b14
+   reference=+=(segid $seg2.$counter and resid $res2.$counter)
+   reference=-=(segid $seg1.$counter and resid $res1.$counter)
+ end
+
+ display NAG:NAG B14 bond added from \
+  $seg1.$counter[a4] $res1.$counter[a4] to \
+  $seg2.$counter[a4] $res2.$counter[a4]
+
+ evaluate ($counter=$counter+1)
+end loop nagasn
+
+
+!
+! Build missing atoms if necessary
+!
+
+show sum(1) ( not hydrogen and not known )
+if ( $select > 0 ) then
+    display ERROR: There are coordinates missing for non-hydrogen atoms
+    stop
+end if
+
+identity (store1) (not known)
+show sum(1) (store1)
+evaluate ($tobuild=$result)
+
+if ( $tobuild > 0 ) then
+    ! Fix known atoms
+    fix selection=(not(store1)) end
+
+    show sum(1) (store1)
+    evaluate ($moving=$result)
+
+    if ( $moving > 0 ) then
+        for $id in id (tag and byres(store1)) loop avco
+            show ave(x) (byres(id $id) and known)
+            evaluate ($ave_x=$result)
+            show ave(y) (byres(id $id) and known)
+            evaluate ($ave_y=$result)
+            show ave(z) (byres(id $id) and known)
+            evaluate ($ave_z=$result)
+
+            do (x=$ave_x) (byres(id $id) and store1)
+            do (y=$ave_y) (byres(id $id) and store1)
+            do (z=$ave_z) (byres(id $id) and store1)
+        end loop avco
+
+        do (x=x+2*random(1.0)-1) (store1)
+        do (y=y+2*random(1.0)-1) (store1)
+        do (z=z+2*random(1.0)-1) (store1)
+
+        {- start parameter for the side chain building -}
+        parameter
+            nbonds
+                rcon=20. nbxmod=-2 repel=0.9  wmin=0.1 tolerance=1.
+                rexp=2 irexp=2 inhibit=0.25
+            end
+        end
+
+        {- Friction coefficient, in 1/ps. -}
+        do (fbeta=100) (store1)
+
+        evaluate ($bath=300.0)
+        evaluate ($nstep=500)
+        evaluate ($timestep=0.0005)
+
+        do (refy=mass) (store1)
+
+        do (mass=20) (store1)
+
+        igroup interaction
+            (store1) (store1 or known)
+        end
+
+        {- turn on initial energy terms -}
+        flags
+            exclude *
+            include bond angle vdw
+        end
+
+        minimize powell nstep=50  nprint=10 end
+
+        do (vx=maxwell($bath)) (store1)
+        do (vy=maxwell($bath)) (store1)
+        do (vz=maxwell($bath)) (store1)
+
+        flags
+            exclude vdw
+            include impr
+        end
+
+        dynamics cartesian
+            nstep=50
+            timestep=$timestep
+            tcoupling=true temperature=$bath
+            nprint=$nstep
+            cmremove=false
+        end
+
+        flags
+            include vdw
+        end
+
+        minimize powell nstep=50 nprint=10 end
+
+        do (vx=maxwell($bath)) (store1)
+        do (vy=maxwell($bath)) (store1)
+        do (vz=maxwell($bath)) (store1)
+
+        dynamics cartesian
+            nstep=50
+            timestep=$timestep
+            tcoupling=true temperature=$bath
+            nprint=$nstep
+            cmremove=false
+        end
+
+        parameter
+            nbonds
+                rcon=2. nbxmod=-3 repel=0.75
+            end
+        end
+
+        minimize powell nstep=100 nprint=25 end
+
+        do (vx=maxwell($bath)) (store1)
+        do (vy=maxwell($bath)) (store1)
+        do (vz=maxwell($bath)) (store1)
+
+        dynamics cartesian
+            nstep=$nstep
+            timestep=$timestep
+            tcoupling=true temperature=$bath
+            nprint=$nstep
+            cmremove=false
+        end
+
+        {- turn on all energy terms -}
+        flags include dihe ? end
+
+        {- set repel to ~vdw radii -}
+        parameter
+            nbonds
+                repel=0.89
+            end
+        end
+
+        minimize powell nstep=500 nprint=50 end
+
+        flags exclude * include bond angl impr dihe vdw end
+
+        {- return masses to something sensible -}
+        do (mass=refy) (store1)
+
+        do (vx=maxwell($bath)) (store1)
+        do (vy=maxwell($bath)) (store1)
+        do (vz=maxwell($bath)) (store1)
+
+        dynamics cartesian
+            nstep=$nstep
+            timestep=$timestep
+            tcoupling=true temperature=$bath
+            nprint=$nstep
+            cmremove=false
+        end
+
+        {- some final minimisation -}
+        minimize powell
+            nstep=500
+            drop=40.0
+            nprint=50
+        end
+    end if ! moving
+
+    fix sele=((attr store1 = 0) and not name H*) end
+    minimize powell
+      nstep=50
+      drop=40.0
+      nprint=5
+    end
+    fix sele=(not all) end
+
+end if
+
+!
+! turn on electrostatics and short EM of built atoms
+!
+
+parameter
+  nbonds
+      nbxmod=5 atom cdie shift
+      cutnb=9.5 ctofnb=8.5 ctonnb=6.5 eps=78.0 e14fac=0.4 inhibit 0.5
+      wmin=0.5
+      tolerance  0.5
+      repel=0.0
+  end
+end
+
+flags excl * incl bond angl impr dihe vdw elec end
+
+fix selection=((attr store1 = 0) and not name H*) end
+minimize powell
+    nstep=50
+    drop=40.0
+    nprint=50
+end
+fix selection=(not all) end
+
+energy end
+
+! Stores:
+! store1: solvation params
+! store2: is interface
+! store3: free solvation ene
+! store4: complex solvation ene
+
+! Desolvation
+inline @@toppar/def_solv_param.cns
+
+! Manually because lazy
+
+do (store2 = 1) (byres (segid B and not hydrogen and
+                        (not segid B and not hydrogen) around &icutoff))  ! larger
+do (rmsd = 0) (all)
+surface mode=access accu=0.075 rh2o=1.4 sele=(segid B) end
+do (store3 = store3 + rmsd * store1) (segid B)
+
+do (store2 = 1) (byres (segid E and not hydrogen and
+                        (not segid E and not hydrogen) around &icutoff))  ! larger
+do (rmsd = 0) (all)
+surface mode=access accu=0.075 rh2o=1.4 sele=(segid E) end
+do (store3 = store3 + rmsd * store1) (segid E)
+
+surface mode=access accu=0.075 rh2o=1.4 sele=(all) end
+do (store4 = store4 + rmsd * store1) (all)
+
+flags
+    exclude *
+    include vdw elec
+end
+
+parameter
+  nbonds
+    nbxmod=5 atom cdie shift
+    cutnb=9.5 ctofnb=8.5 ctonnb=6.5 eps=1.0 e14fac=0.4 inhibit 0.25
+    wmin=0.5 tolerance  0.5
+  end
+end
+
+!
+! Iterate over all residues (in order)
+!
+evaluate ($buffer_file = &coorin - ".pdb" + ".resene")
+buffer energies to=file=$buffer_file end
+buffer energies
+    display ## Interface Residue Energies (&coorin)
+    display ## Seg Res vdW Elec Desolv
+end
+
+for $id_vp in id (attr store2 = 1 and tag) loop interface_residues
+
+    ! Identify viewpoint
+    show (resid) (id $id_vp)
+    evaluate ($resi_vp = $result)
+    show (resn) (id $id_vp)
+    evaluate ($resn_vp = $result)
+    show (segid) (id $id_vp)
+    evaluate ($segid_vp = $result)
+
+    show sum (store3) (segid $segid_vp and resid $resi_vp)
+    evaluate ($esolfree = $result)
+    show sum (store4) (segid $segid_vp and resid $resi_vp)
+    evaluate ($esolcplx = $result)
+    evaluate ($edesolv = ($esolcplx - $esolfree))
+
+    igroup interaction (segid $segid_vp and resid $resi_vp) (not (segid $segid_vp and resid $resi_vp)) end  ! inter+intra
+    energy end
+
+    buffer energies
+        display $segid_vp $resi_vp $resn_vp $vdw $elec $edesolv
+    end
+
+end loop interface_residues
+
+buffer energies dump end
+
+stop

@@ -1,0 +1,3 @@
+- `ACE2_refseq_protein.fasta`: unaligned sequences of ACE2 orthologs.
+- `ACE2_refseq_aln.mafft.fasta`: aligned sequences of ACE2 orthologs (MAFFT webserver, default options).
+- `ACE2_refseq_aln.mafft_trimmed_6m17.fasta`: processed alignment, keeping only the region covered by PDB 6m17.
