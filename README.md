@@ -2,7 +2,7 @@
 Data and code archive for our work available on [biorxiv](https://www.biorxiv.org/content/10.1101/2020.06.05.136861v1).
 
 ## Model Viewer
-You can view the 10 best models of each species at: https://joaorodrigues.github.io/docking-results-viewer/
+You can view the 10 best models of each species at: https://joaorodrigues.github.io/ace2-animal-models/
 
 ## Contents
 
