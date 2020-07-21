@@ -1,3 +1,5 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/JoaoRodrigues/ace2-animal-models/data)
+
 # Insights on cross-species transmission of SARS-CoV-2 from structural modeling
 Data and code archive for our work available on [biorxiv](https://www.biorxiv.org/content/10.1101/2020.06.05.136861v1).
 
